@@ -1,0 +1,119 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+//Approach 1 - Brute force - O(n3)
+// int main() {
+
+// // Test Case 1    
+//     vector<int> arr = {7, 5, -13, 5, 10, -2, 5};
+
+// // Test Case 2   
+//     vector<int> arr = {6, 3, -2, 4, -1, 0, -5};
+
+//     int max = 0;
+    
+//     cout<<"Array is :- ";
+//     for(int data: arr) {
+//         cout<<data<<" ";
+//     }
+//     for(int i = 1; i <= arr.size(); i++) {
+//         for(int j = i; j <= arr.size(); j++) {
+//             int sum = 0;
+//             for(int k = i; k <= j; k++) {
+//                 sum = sum + arr[k];
+//             }
+//             if(sum > max) {
+//                 max = sum;
+//             }
+//         }
+//     }
+//     cout<<endl<<"Max sum is :- "<<max;
+    
+//     return 0;
+// }
+
+//Approach 2 - Using Prefix sum - O(n2)
+//A[i, j] = A[j] = A[i - 1]
+// int main() {
+    
+// // // Test Case 1    
+//     vector<int> arr = {7, 5, -13, 5, 10, -2, 5};
+
+// // // Test Case 2   
+//     // vector<int> arr = {6, 3, -2, 4, -1, 0, -5};
+
+//     int max = 0;
+    
+//     cout<<"Original array is :- ";
+//     for(int data: arr) {
+//         cout<<data<<" ";
+//     }
+    
+//     cout<<endl<<"Prefix sum array is :- ";
+//     for(int i = 0; i < arr.size(); i++) {
+//         arr[i] = arr[i] + arr[i - 1];
+//     }
+//     for(int data: arr) {
+//         cout<<data<<" ";
+//     }
+    
+//     for(int i = 0; i < arr.size(); i++) {
+//         for(int j = i; j < arr.size(); j++) {
+//             int sum = arr[j] - arr[i - 1];
+//             if(sum > max) {
+//                 max = sum;
+//             }
+//         }
+//     }
+//     cout<<endl<<"Max sum is :- "<<max;
+    
+//     return 0;
+// }
+
+
+//Approach 3 - Kadane's Algorithm - O(n)
+int main() {
+    
+    vector<int> arr = {7, 5, -13, 5, 10, -2, 5};
+    
+    cout<<"Original array :- ";
+    for(int data: arr) {
+        cout<<data<<" ";
+    }
+    
+    int max = INT_MIN;
+    int maxTH = 0;
+    
+    for(int i = 0; i < arr.size(); i++) {
+        maxTH = maxTH + arr[i];
+        if(maxTH > max) {
+            max = maxTH;
+        }
+        if(maxTH < 0) {
+            maxTH = 0;
+        }
+    }
+    cout<<endl<<"Max sum is :- "<<max;
+    
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
