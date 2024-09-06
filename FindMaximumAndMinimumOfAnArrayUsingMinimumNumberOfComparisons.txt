@@ -1,0 +1,30 @@
+// Approach 1
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    
+    // vector<int> arr = {3, 5, 1, 4, 7};
+    vector<int> arr = {2, 5, 1, 6, 3, 4};
+    int min = arr[0];
+    int max = arr[0];
+    int size = arr.size();
+    
+    int i = 0;
+    while(size - 1) {
+        // min check
+        if(arr[i] < min) {
+            min = arr[i];
+        }
+        // max check
+        if(arr[i] > max) {
+            max = arr[i];
+        }
+        i++;
+        size--;
+    }
+    
+    cout<<"Minimum and maximum element is :- "<<max<<", "<<min;
+    
+    return 0;
+}
