@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void swap(int &a, int &b) {
+    int temp = a;
+    a = b;
+    b = temp;
+}
+
+vector<int> sortedArray(vector<int> &arr, int N) {
+    int low = 0;
+    int mid = 0;
+    int high = N - 1;
+    
+    while(mid <= high) {
+        if(arr[mid] == 0) {
+            swap(arr[mid], arr[low]);
+            mid++;
+            low++;
+        }
+        else if(arr[mid] == 2) {
+            swap(arr[mid], arr[high]);
+            high--;
+        }
+        else {
+            mid++;
+        }
+    }
+    
+    return arr;
+}
+
+int main() {
+    
+    vector<int> arr = {0, 2, 1, 2, 0};
+    int N = arr.size();
+    cout<<"Unsorted array is :- ";
+    for(int data: arr) {
+        cout<<data<<" ";
+    }
+    
+    vector<int> result = sortedArray(arr, N);
+    cout<<endl<<"Sorted array is :- ";
+    for(int data: result) {
+        cout<<data<<" ";
+    }
+    
+    return 0;
+}
