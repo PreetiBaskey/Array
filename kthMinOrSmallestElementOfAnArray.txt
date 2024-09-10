@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int kthSmallestElement(vector<int> &arr, int N, int k) {
+    priority_queue<int> pq;
+    
+    for(int i = 0; i < N; i++) {
+        pq.push(arr[i]);
+        
+        if(pq.size() > k) {
+            pq.pop();
+        }
+    }
+    
+    return pq.top();
+}
+
+int main() {
+    
+    vector<int> arr = {7, 10, 4, 3, 20, 15};
+    int N = arr.size();
+    int k;
+    
+    for(int data: arr) {
+        cout<<data<<" ";
+    } 
+    
+    cout<<endl<<"Enter k :- ";
+    cin>>k;
+    
+    int result = kthSmallestElement(arr, N, k);
+    cout<<endl<<k<<"th smallest element is :- "<<result;
+    
+    return 0;
+}
