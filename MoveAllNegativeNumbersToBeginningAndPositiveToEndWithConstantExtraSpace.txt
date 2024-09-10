@@ -1,0 +1,33 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    
+    vector<int> arr = {-12, 11, -13, -5, 6, -7, 5, -3, -6};
+    int N = arr.size();
+    
+    int l = 0;
+    int r = N - 1;
+    
+    while(l < r) {
+        while(arr[l] < 0) {
+            l++;
+        }
+        while(arr[r] > 0) {
+            r--;
+        }
+        if(l >= r) break;
+        if(arr[l] > 0 && arr[r] < 0) {
+            int temp = arr[l];
+            arr[l] = arr[r];
+            arr[r] = temp;
+        }
+    }
+    
+    cout<<"Sorted array is :- ";
+    for(int data: arr) {
+        cout<<data<<" ";
+    }
+    
+    return 0;
+}
