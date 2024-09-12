@@ -1,0 +1,48 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    
+    vector<int> arr1 = {1, 1, 1, 2, 2, 3, 3, 3};
+    vector<int> arr2 = {3, 3, 3, 4};
+    int N = arr1.size();
+    int M = arr2.size();
+    int i = 0, j = 0;
+    vector<int> result;
+    
+    while(i < N && j < M) {
+        
+        // Duplicates
+        while(i > 0 && i < N && arr1[i] == arr2[i - 1]) {
+            i++;
+        }
+        while(j > 0 && j < M && arr2[j] == arr2[j - 1]) {
+            j++;
+        }
+        
+        //One array exaust
+        if(i >= N || j >= M) {
+            break;
+        }
+        
+        //Comparisions
+        if(arr1[i] < arr2[j]) {
+            i++;
+        }
+        else if(arr1[i] > arr2[j]) {
+            j++;
+        }
+        else {
+            result.push_back(arr1[i]);
+            i++;
+            j++;
+        }
+    }
+    
+    cout<<"Intersection of two array is :- ";
+    for(int data: result) {
+        cout<<data<<" ";
+    }
+    
+    return 0;
+}
