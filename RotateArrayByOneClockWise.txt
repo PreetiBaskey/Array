@@ -1,0 +1,37 @@
+
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<int> rotateArray(vector<int> &arr, int N, int k) {
+
+vector<int> temp(N);
+
+for(int i = 0; i < arr.size(); i++) {
+temp[(i + k)%N] = arr[i];
+}
+
+return temp;
+}
+
+int main() {
+
+vector<int> arr = {10, 9, 6, 33, 56};
+int N = 5;
+int k;
+
+cout<<endl<<"Array before rotation is :- ";
+for(int data: arr) {
+cout<<data<<" ";
+}
+
+cout<<endl<<"Enter value of k :- ";
+cin>>k;
+
+vector<int> result = rotateArray(arr, N, k);
+cout<<"Modified array is :- ";
+for(int data: result) {
+cout<<data<<" ";
+}
+
+return 0;
+}
