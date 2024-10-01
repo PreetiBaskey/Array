@@ -1,0 +1,37 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int getMinimumDiff(vector<int> &arr, int N, int k) {
+    sort(arr.begin(), arr.end());
+    
+    int ans = arr[N - 1] - arr[0];
+    
+    int smallest = arr[0] + k;
+    int largest = arr[N - 1] - k;
+    int maxi, mini;
+    
+    for(int i = 0; i < N - 1; i++) {
+        mini = min(smallest, arr[i + 1] - k);
+        maxi = max(largest, arr[i] + k);
+        
+        if(mini < 0) {
+            continue;
+        }
+        
+        ans = min(ans, maxi - mini);
+    }
+    
+    return ans;
+}
+
+int main() {
+    
+    vector<int> arr = {1, 5, 8, 10};
+    int N = arr.size();
+    int k = 2;
+    
+    int result = getMinimumDiff(arr, N, k);
+    cout<<"Minimum height difference is :- "<<result;
+    
+    return 0;
+}
