@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int getMaximumSubarraySum(vector<int> &arr) {
+    int maxSum = INT_MIN;
+    int currSum = 0;
+    
+    for(int i: arr) {
+        currSum += i;
+        maxSum = max(maxSum, currSum);
+        if(currSum < 0) {
+            currSum = 0;
+        }
+    }
+    
+    return maxSum;
+}
+
+int main() {
+    
+    vector<int> arr = {1, 2, 3, -2, 5};
+    
+    int result = getMaximumSubarraySum(arr);
+    
+    cout<<"Maximum subarray sum is :- "<<result;
+    
+    return 0;
+}
