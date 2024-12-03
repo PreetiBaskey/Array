@@ -1,0 +1,75 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int merge(int arr[], int lb, int mid, int ub) {
+    int leftSideArrSize = mid - lb + 1;
+    int i = lb;
+    int j = mid + 1;
+    int k = lb;
+    int brr[10];
+    int count = 0;
+    while(i <= mid && j <= ub) {
+        if(arr[i] <= arr[j]) {
+            brr[k] = arr[i];
+            i++;
+        }
+        else {
+            brr[k] = arr[j];
+            count = count + leftSideArrSize;
+            j++;
+        }
+        k++;
+    }
+    if(i > mid) {
+        while(j <= ub) {
+            brr[k] = arr[j];
+            j++;
+            k++;
+        }
+    }
+    else {
+        while(i <= mid) {
+            brr[k] = arr[i];
+            i++;
+            k++;
+        }
+    }
+    for(int k = lb; k <= ub; k++) {
+        arr[k] = brr[k];
+    }
+    
+    return count;
+}
+
+int mergeSort(int arr[], int lb, int ub) {
+    int inversionCount = 0;
+    if(lb < ub) {
+        int mid = lb + (-lb + ub) / 2;
+        inversionCount += mergeSort(arr, lb, mid);
+        inversionCount += mergeSort(arr, mid + 1, ub);
+        inversionCount += merge(arr, lb, mid, ub);
+    }
+    
+    return inversionCount;
+}
+
+int main() {
+    
+    int arr[] = {4, 3, 2, 1}, size = 4;
+    
+    cout<<"Array before merge sort :- ";
+    for(int i = 0; i < size; i++) {
+        cout<<arr[i]<<" ";
+    }
+    
+    int inversionCount = mergeSort(arr, 0, size - 1);
+    
+    cout<<endl<<"Inversion count is :- "<<inversionCount;
+    cout<<endl<<"Array after merge sort :- ";
+    for(int i = 0; i < size; i++) {
+        cout<<arr[i]<<" ";
+    }
+    
+    
+    return 0;
+}
