@@ -1,0 +1,30 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int getBestTime(vector<int> &arr, int n) {
+    int buyStockPrice = arr[0];
+    int currentProfit = 0;
+    int maxProfit = 0;
+    
+    for(int i = 0; i < n; i++) {
+        if(buyStockPrice > arr[i]) {
+            buyStockPrice = arr[i];
+        }
+        currentProfit = arr[i] - buyStockPrice;
+        maxProfit = max(maxProfit, currentProfit);
+    }
+    
+    return maxProfit;
+}
+
+int main() {
+    
+    vector<int> arr = {7,1,5,3,6,4};
+    int n = arr.size();
+    
+    cout<<"Best time to buy and sell stock is :- ";
+    int result = getBestTime(arr, n);
+    cout<<result;
+    
+    return 0;
+}
