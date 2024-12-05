@@ -1,0 +1,42 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+vector<vector<int>> getPairs(vector<int> &arr, int sum) {
+    vector<vector<int>> pairs;
+    int n = arr.size();
+    int l = 0, r = n - 1;
+    while(l < r) {
+        if(arr[l] + arr[r] > sum) {
+            r--;
+        }
+        else if(arr[l] + arr[r] < sum) {
+            l++;
+        }
+        else {
+            pairs.push_back({arr[l], arr[r]});
+            l++;
+        }
+    }
+    
+    return pairs;
+}
+
+int main() {
+    
+    vector<int> arr = {5, 8, 3, 4, 2, 6, 10, 7, 1, 9};
+    int sum = 11;
+    vector<vector<int>> pairs;
+    
+    sort(arr.begin(), arr.end());
+    pairs = getPairs(arr, sum);
+    cout<<"Pairs are :- "<<endl;
+    for(const auto &data: pairs) {
+        cout<<"{";
+        for(int pair: data) {
+            cout<<pair<<" ";
+        }
+        cout<<"}, ";
+    }
+    
+    return 0;
+}
