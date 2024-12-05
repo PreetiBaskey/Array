@@ -1,0 +1,35 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    
+    vector<int> arr = {1, 5, 10, 20, 40, 80};
+    vector<int> brr = {6, 7, 20, 80, 100};
+    vector<int> crr = {3, 4, 15, 20, 30, 70, 80, 120};
+    int n = arr.size(), m = brr.size(), o = crr.size();
+    int i = 0, j = 0, k = 0;
+    vector<int> result;
+    
+    while(i < n && j < m  && k < o) {
+        if(arr[i] == brr[j] && brr[j] == crr[k]) {
+            result.push_back(arr[i]);
+            i++; j++; k++;
+        }
+        else if(arr[i] < brr[j]) {
+            i++;
+        }
+        else if(brr[j] < crr[k]) {
+            j++;
+        }
+        else {
+            k++;
+        }
+    }
+    
+    cout<<"Common elements are :- ";
+    for(int data: result) {
+        cout<<data<<" ";
+    }
+    
+    return 0;
+}
