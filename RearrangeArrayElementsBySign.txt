@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+// Leetcode
+// Number of positive and negative elements are equal
+
+vector<int> rearrangedArray(vector<int> &arr, int n) {
+    vector<int> result(n, 0);
+    int pi = 0, ni = 1;
+    for(int &data: arr) {
+        if(data > 0 && pi < n) {
+            result[pi] = data;
+            pi += 2;
+        }
+        else {
+            if(ni < n) {
+                result[ni] = data;
+                ni += 2;
+            }
+        }
+    }
+    
+    return result;
+}
+
+int main() {
+    
+    vector<int> arr = {3,1,-2,-5,2,-4};
+    int n = arr.size();
+    vector<int> result;
+    
+    result = rearrangedArray(arr, n);
+    
+    cout<<"Rearranged array is :- ";
+    for(int data: result) {
+        cout<<data<<" ";
+    }
+    
+    return 0;
+}
