@@ -1,0 +1,55 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void multiply(vector<int> &arr, int &size, int multiplier) {
+    int carry = 0;
+    
+    for(int i = 0; i < size; i++) {
+        int result = multiplier * arr[i];
+        result = result + carry;
+        
+        arr[i] = result%10;
+        carry = result/10;
+        
+    }
+    
+    //For adding carry , ex - 16
+    while(carry > 0) {
+        arr[size] = carry%10;
+        size++;
+        
+        carry = carry/10;
+    }
+}
+
+vector<int> getFactorial(int N) {
+    vector<int> arr(10000, 0);
+    arr[0] = 1;
+    int size = 1;
+    
+    for(int multiplier = 2; multiplier <= N; multiplier++) {
+        multiply(arr, size, multiplier);
+    }
+    
+    vector<int> result;
+    for(int i = size - 1; i >= 0; i--) {
+        result.push_back(arr[i]);
+    }
+    
+    return result;
+}
+
+int main() {
+    
+    int N;
+    
+    cout<<"Enter a number to find factorial :- ";
+    cin>>N;
+    
+    vector<int> result = getFactorial(N);
+    for(int &data: result)  {
+        cout<<data;
+    }
+    
+    return 0;
+}
