@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int getMaxProduct(vector<int> &arr, int n) {
+    int leftProduct = 1;
+    int rightProduct = 1;
+    int result = arr[0];
+    
+    for(int i = 0; i < n; i++) {
+        leftProduct = leftProduct == 0 ? 1 : leftProduct;
+        rightProduct = rightProduct == 0 ? 1 : rightProduct;
+        
+        leftProduct *= arr[i];
+        rightProduct *= arr[n - i - 1];
+        
+        result = max(result, max(leftProduct, rightProduct));
+    }
+    
+    return result;
+}
+
+int main() {
+    
+    vector<int> arr = {2, 3, -2, -5, 6, -1, 4};
+    int n = arr.size();
+    
+    int result = getMaxProduct(arr, n);
+    cout<<"Maximum product is :- "<<result;
+    
+    return 0;
+}
