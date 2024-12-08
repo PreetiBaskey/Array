@@ -1,0 +1,44 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int getLongestLength(vector<int> &arr) {
+    int longestLength = 0;
+    unordered_map<int, bool> mp;
+    for(int &data: arr) {
+        mp.insert(make_pair(data, false));
+    }
+    
+    for(int &data: arr) {
+        int currentLength = 1;
+        
+        //check in forward direction
+        int nextNum = data + 1;
+        while(mp.find(nextNum) != mp.end() && !mp[nextNum]) {
+            currentLength++;
+            mp[nextNum] = true;
+            //move to the next number
+            nextNum++;
+        }
+        
+        //check for reverse direction
+        int preNum = data - 1;
+        while(mp.find(preNum) != mp.end() && !mp[preNum]) {
+            currentLength++;
+            mp[preNum] = true;
+            preNum--;
+        }
+        longestLength = max(longestLength, currentLength);
+    }
+    
+    return longestLength;
+}
+
+int main() {
+    
+    vector<int> arr = {0, 1, 2, 49, 50, 48, 47};
+    
+    int result = getLongestLength(arr);
+    cout<<"Longest subsequece length is :- "<<result;
+    
+    return 0;
+}
