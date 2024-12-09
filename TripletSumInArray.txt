@@ -1,0 +1,40 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool findTriplet(vector<int> &arr, int n, int x) {
+    for(int i = 0; i < n - 2; i++) {
+        int j = i + 1;
+        int k = n - 1;
+        while(j < k) {
+            int ele = arr[i] + arr[j] + arr[k];
+            if(ele < x) {
+                j++;
+            }
+            else if(ele > x) {
+                k--;
+            }
+            else if(ele == x) {
+                return true;
+            }
+        }
+    }
+    
+    return false;
+}
+
+int main() {
+    
+    vector<int> arr = {40, 20, 10, 3, 6, 7};
+    int n = arr.size();
+    int target = 24;
+    
+    bool result = findTriplet(arr, n, target);
+    if(result) {
+        cout<<"Triplet found !!";
+    }
+    else {
+        cout<<"Triplet not found !!";
+    }
+    
+    return 0;
+}
