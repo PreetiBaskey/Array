@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int minDifference(vector<int> &arr, int &n, int &m) {
+    int minDiff = INT_MAX;
+    int i = 0, j = i + m - 1;
+    sort(arr.begin(), arr.end());
+    while(i <= n - m) {
+        int diff = arr[j] - arr[i];
+        minDiff = min(minDiff, diff);
+        i++;
+        j++;
+    }
+    
+    return minDiff;
+}
+
+int main() {
+    
+    vector<int> arr = {3, 4, 1, 9, 56, 7, 9, 12};
+    int n = arr.size();
+    int m = 5;
+    
+    int result = minDifference(arr, n, m);
+    cout<<"Minimum difference between maximum chocolates and minimum chocolates is :- "<<result;
+    
+    return 0;
+}
