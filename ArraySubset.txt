@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool isSubset(vector<int> &arr, vector<int> &brr) {
+    unordered_map<int, int> mp;
+    
+    for(int &data: arr) {
+        if(mp.find(data) != mp.end()) {
+            mp[data]++;
+        }
+        else {
+            mp.insert({data, 1});
+        }
+    }
+    for(int &data: brr) {
+        if(mp.find(data) != mp.end()) {
+            if(mp[data] == 1) {
+                mp.erase(data);
+            }
+            else {
+                mp[data]--;
+            }
+        }
+        else {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
+int main() {
+    
+    vector<int> arr = {1, 2, 3, 4, 5, 6, 7, 8, 1};
+    vector<int> brr = {1, 2, 3, 1};
+    // vector<int> brr = {11, 21, 31, 11};
+    
+    bool result = isSubset(arr, brr);
+    if(result) {
+        cout<<"It is subset !!";
+    }
+    else {
+        cout<<"It is not subset !!";
+    }
+    
+    return 0;
+}
