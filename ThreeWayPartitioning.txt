@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void updateArr(vector<int> &arr, int n, int a, int b) {
+    int start = 0;
+    int mid = 0;
+    int end = n - 1;
+    
+    while(mid <= end) {
+        int data = arr[mid];
+        if(data < a) {
+            int temp = arr[start];
+            arr[start] = arr[mid];
+            arr[mid] = temp;
+            start++;
+            mid++;
+        }
+        else if(data >  b) {
+            int temp = arr[mid];
+            arr[mid] = arr[end];
+            arr[end] = temp;
+            end--;
+        }
+        else {
+            mid++;
+        }
+    }
+}
+
+int main() {
+    
+    vector<int> arr = {1, 4, 3, 6, 2, 1};
+    int n = arr.size();
+    int a = 1, b = 3;
+    
+    updateArr(arr, n, a, b);
+    
+    for(int &data: arr) {
+        cout<<data<<" ";
+    }
+    
+    return 0;
+}
