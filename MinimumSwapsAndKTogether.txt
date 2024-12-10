@@ -1,0 +1,43 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int getMinSwap(vector<int> &arr, int &n, int &k) {
+    int winSize = 0, swapCount = 0;
+    for(int i = 0; i < n; i++) {
+        if(arr[i] <= k) {
+            winSize++;
+        }
+    }
+    for(int i = 0; i < winSize; i++) {
+        if(arr[i] > k) {
+            swapCount++;
+        }
+    }
+    int start = 0, end = winSize;
+    int minSwap = swapCount;
+    while(end < n) {
+        if(arr[start] > k) {
+            swapCount--;
+        }
+        if(arr[end] > k) {
+            swapCount++;
+        }
+        minSwap = min(minSwap, swapCount);
+        start++;
+        end++;
+    }
+    
+    return minSwap;
+}
+
+int main() {
+    
+    vector<int> arr = {2, 7, 9, 5, 8, 7, 4};
+    int n = arr.size();
+    int k = 6;
+    
+    int minSwap = getMinSwap(arr, n, k);
+    cout<<"Minimum swap is :- "<<minSwap;
+    
+    return 0;
+}
