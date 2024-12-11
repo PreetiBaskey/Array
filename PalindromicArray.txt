@@ -1,0 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool isPalindrom(vector<int> &arr, int &n) {
+    int start = 0, end = n - 1;
+    while(start < end) {
+        if(arr[start] != arr[end]) {
+            return false;
+        }
+        start++;
+        end--;
+    }
+    return true;
+}
+
+int main() {
+    
+    vector<int> arr = {1, 2, 2, 1};
+    // vector<int> arr = {1, 2, 2, 9};
+    int n = arr.size();
+    
+    bool result = isPalindrom(arr, n);
+    if(result) {
+        cout<<"Palindrom !!";
+    }
+    else {
+        cout<<"Not palindrom !!";
+    }
+    
+    return 0;
+}
