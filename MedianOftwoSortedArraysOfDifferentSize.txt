@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int main() {
+    
+    vector<int> arr = {};
+    vector<int> brr = {2, 4, 5, 6};
+    int n = arr.size();
+    int m = brr.size();
+    int totalSize = n + m;
+    vector<int> crr(totalSize);
+    int i = 0, j = 0, k = 0;
+    double median;
+    
+    while(i < n && j < m) {
+        if(arr[i] < brr[j]) {
+            crr[k] = arr[i];
+            i++;
+        }
+        else {
+            crr[k] = brr[j];
+            j++;
+        }
+        k++;
+    }
+    while(j < m) {
+        crr[k] = brr[j];
+        j++;
+        k++;
+    }
+    while(i < n) {
+        crr[k] = arr[i];
+        i++;
+        k++;
+    }
+    
+    if(totalSize%2 == 0) {
+        median = (crr[totalSize/2 - 1] + crr[totalSize/2])/2.0;
+    }
+    else {
+        median = crr[totalSize/2.0];
+    }
+    
+    cout<<"Median of two sorted array arr and brr is :- "<<median;
+    
+    return 0;
+}
