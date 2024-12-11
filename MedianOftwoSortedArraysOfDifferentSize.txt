@@ -1,10 +1,11 @@
+// Brute Force Approach
+// Time Complexit :- O(n + m)
+// Space Complexity :- O(n + m)
+
 #include<bits/stdc++.h>
 using namespace std;
 
-int main() {
-    
-    vector<int> arr = {};
-    vector<int> brr = {2, 4, 5, 6};
+double getMedian(vector<int> &arr, vector<int> &brr) {
     int n = arr.size();
     int m = brr.size();
     int totalSize = n + m;
@@ -41,6 +42,15 @@ int main() {
         median = crr[totalSize/2.0];
     }
     
+    return median;
+}
+
+int main() {
+    
+    vector<int> arr = {};
+    vector<int> brr = {2, 4, 5, 6};
+
+    double median = getMedian(arr, brr);
     cout<<"Median of two sorted array arr and brr is :- "<<median;
     
     return 0;
