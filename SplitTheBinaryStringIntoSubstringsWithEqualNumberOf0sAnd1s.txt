@@ -1,0 +1,31 @@
+// 1st approach | using for loop + counters
+// Time complexity :- O(N)
+// Space complexity :- O(1)
+
+#include<iostream>
+using namespace std;
+
+int countSubstring(string &s) {
+    int count = 0, x = 0, y = 0;
+    int n = s.size();
+    int i;
+    for(i = 0; i < n; i++) {
+        if(s[i] == '0') x++;
+        else if(s[i] == '1') y++;
+        if(x == y) count++;
+    }
+    if(i == n && count == 0) return -1;
+    else return count;
+}
+
+int main() {
+    
+    string s;
+    cout<<"Enter a string :- ";
+    cin>>s;
+    int result;
+    result = countSubstring(s);
+    cout<<"Number of substring with equal number of 0's and 1's is :- "<<result;
+    
+    return 0;
+}
