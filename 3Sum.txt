@@ -1,3 +1,6 @@
+//approach - 1 - sorting, two pointers, two sum
+//time complexity - O(n^2)
+//space complexity  - O(1), ignoring the sorting stack space, which will be O(nlogn)
 class Solution {
 public:
     void twoSum(vector<int> &nums, vector<vector<int>> &result, int target, int i, int j) {
