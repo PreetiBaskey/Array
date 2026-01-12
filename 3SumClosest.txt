@@ -1,0 +1,34 @@
+//approach - 1
+//time complexity - O(n^2)
+//space complexity - O(1), if we ignore sorting stack space, otherwise O(nlogn)
+class Solution {
+public:
+    int threeSumClosest(vector<int>& nums, int target) {
+        sort(begin(nums), end(nums));
+        int n = nums.size();
+
+        int closestSum = nums[0] + nums[1] + nums[2];
+        for(int i = 0; i < n - 2; i++) {
+            int left = i + 1;
+            int right = n - 1;
+
+            while(left < right) {
+                int currSum = nums[i] + nums[left] + nums[right];
+                if(abs(target - currSum) < abs(target - closestSum)) {
+                    closestSum = currSum;
+                }
+                else if(currSum > target) {
+                    right--;
+                }
+                else if(currSum < target) {
+                    left++;
+                }
+                else {
+                    return currSum;
+                }
+            }
+        }
+
+        return closestSum;
+    }
+};
