@@ -1,38 +1,43 @@
-#include<bits/stdc++.h>
-using namespace std;
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(1)
+class Solution {
+public:
+    void nextPermutation(vector<int>& nums) {
+        int n = nums.size();
 
-int main() {
-    
-    vector<int> arr = {1,1,5};
-    int n = arr.size();
-    int index = -1;
-    
-    for(int i = n - 1; i > 0; i--) {
-        if(arr[i - 1] < arr[i]) {
-            index = i - 1;
-            break;
+        if(n == 1) {
+            return;
         }
-    }
-    
-    if(index != -1) {
-        int swap_index = -1;
-    
-        for(int i = n -1; i >= index + 1; i--) {
-            if(arr[i] > arr[index]) {
-                swap_index = i;
+
+        //step 1 - getting the idx1
+        int idx1 = -1;
+        for(int i = n - 2; i >= 0; i--) {
+            if(nums[i] < nums[i + 1]) {
+                idx1 = i;
                 break;
             }
         }
-        swap(arr[index], arr[swap_index]);
+
+        if(idx1 != -1) {
+            //step 2 - getting the idx2
+            int idx2 = -1;
+            for(int i = n - 1; i >= 0; i--) {
+                if(nums[idx1] < nums[i]) {
+                    idx2 = i;
+                    break;
+                }
+            }
+
+            //step 3 - swap idx1 and idx2 elements
+            swap(nums[idx1], nums[idx2]);
+
+            //step 4 - sort the array from idx1 + 1 to n
+            sort(nums.begin() + idx1 + 1, nums.begin() + n);
+        }
+
+        else {
+            reverse(nums.begin(), nums.end());
+        }
     }
-    
-    
-    reverse(arr.begin() + index + 1, arr.end());
-    
-    cout<<"Next permutation is :- ";
-    for(int data: arr) {
-        cout<<data<<" ";
-    }
-    
-    return 0;
-}
+};
