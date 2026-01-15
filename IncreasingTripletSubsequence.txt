@@ -1,0 +1,38 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(1)
+class Solution {
+public:
+    bool increasingTriplet(vector<int>& nums) {
+        int n = nums.size();
+
+        //step1 - set first and second as infinity and third should point to the first element, because third should be compare to both first and second element to check which one is greater than third
+        int first = INT_MAX;
+        int second = INT_MAX;
+        int third = nums[0];
+
+        //step2
+        //1st - if third is less than first, then assign third value to first
+        //2nd - if third is less than second, then assign third value to second
+        //3rd - it is greater than both first and second, then just return true, because we got i < j < k && first < second < third
+        int i = 0;
+        while(i < n) {
+            if(third <= first) {
+                first = third;
+                i++;
+                third = nums[i];
+            }
+            else if(third <= second) {
+                second = third;
+                i++;
+                third = nums[i];
+            }
+            else {
+                return true;
+            }
+        }
+
+        //if not found this : i < j < k && first < second < third
+        return false;
+    }
+};
