@@ -1,0 +1,31 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(n)
+class Solution {
+public:
+    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+        int n = nums.size();
+
+        unordered_map<int, int> mp; //key - num, value - index
+        for(int i = 0; i < n; i++) {
+            int num = nums[i];
+
+            // Check if the current number has been seen before
+            if(mp.find(num) == mp.end()) {
+                mp[num] = i;
+            }
+            else {
+                int lastSeenIndex = mp[num];
+                if(abs(i - lastSeenIndex) <= k) { // Found a duplicate within distance k
+                    return true;
+                }
+                // Always update the map with the most recent index of the number.
+                // This ensures we always compare the current element with the 
+                // closest possible previous occurrence to satisfy the <= k condition.
+                mp[num] = i;
+            }
+        }
+
+        return false;
+    }
+};
