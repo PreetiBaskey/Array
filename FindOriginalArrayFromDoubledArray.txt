@@ -1,0 +1,51 @@
+//approach - 1
+//time complexity - O(nlogn)
+//space complexity - O(n)
+class Solution {
+public:
+    vector<int> findOriginalArray(vector<int>& changed) {
+        int n = changed.size();
+        vector<int> result;
+
+        //step1 - base case - if length is odd not, because changed is twice, so ideally, it should be of even size
+        if(n % 2 != 0) {
+            return {};
+        }
+
+        //step2 - sort the array
+        sort(changed.begin(), changed.end()); 
+
+        //step3 - store frequency of elements
+        unordered_map<int, int> mp; //key - num, value - frequency
+        for(int &ele: changed) { 
+            mp[ele]++;
+        }
+
+        //step4 - find the element in map
+        //if frequency of element in map is 0, just continue/skip it
+        //if mp[twice] is not present in map OR mp[twice] becomes 0, then retuen {}
+        //if mp[twice] is greter than 0, then do - mp[twice]--, mp[ele]--
+        //if mp[twice] is less than 0, then return {}
+        for(int &ele: changed) {
+            if(mp[ele] == 0) {
+                continue;
+            }
+
+            int twice = ele * 2;
+
+            if(mp.find(twice) == mp.end() || mp[twice] == 0) {
+                return {};
+            }
+            if(mp[twice] > 0) {
+              result.push_back(ele);
+              mp[twice]--;
+              mp[ele]--;
+            }
+            else {
+                return {};
+            }
+        }
+
+        return result;
+    }
+};
