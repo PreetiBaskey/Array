@@ -1,3 +1,6 @@
+//approach - 1
+//time complexity - O(n * klogk)
+//space complexity - O(n * k)
 class Solution {
 public:
     vector<vector<string>> groupAnagrams(vector<string>& strs) {
