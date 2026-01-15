@@ -1,0 +1,44 @@
+//approach - 1
+//time complexity - O(n + q)
+//space complexity - O(1)
+class Solution {
+public:
+    vector<int> sumEvenAfterQueries(vector<int>& nums, vector<vector<int>>& queries) {
+        int n = nums.size();
+        int q = queries.size();
+
+        //step1 - calculate sum of even numbers present in nums vector
+        int sumEven = 0;
+        for(int &num: nums) {
+            if(num % 2 == 0) {
+                sumEven += num;
+            }
+        }
+
+        vector<int> result;
+        //step2
+        //if nums[idx] from query is even then do, sumEven -= nums[idx]
+        //do query = nums[idx] = num
+        //if now after query, if nums[idx] is even, then add back to sumEven, sumEven += nums[idx]
+        //push the current sumEven into the result vector
+        for(vector<int> &query: queries) {
+             int num = query[0];
+             int idx = query[1];
+
+             if(nums[idx] % 2 == 0) {
+                sumEven -= nums[idx];
+             }
+
+             nums[idx] += num;
+
+
+             if(nums[idx] % 2 == 0) {
+                sumEven += nums[idx];
+             }
+
+             result.push_back(sumEven);
+        }
+
+        return result;
+    }
+};
