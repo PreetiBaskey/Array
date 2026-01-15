@@ -1,0 +1,62 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(n)
+// class Solution {
+// public:
+//     vector<int> findErrorNums(vector<int>& nums) {
+//         int n = nums.size();
+
+//         unordered_map<int, int> mp; //key - num, value - frequency
+//         for(int &num: nums) {
+//             mp[num]++;
+//         }
+
+//         int missingNum = 0;
+//         int duplicateNum = 0;
+//         for(int i = 0; i <= n; i++) {
+//             if(mp.find(i) == mp.end()) {
+//                 missingNum = i;
+//             }
+//         }
+
+//         for(auto &it: mp) {
+//             if(it.second > 1) {
+//                 duplicateNum = it.first;
+//             }
+//         }
+
+//         return {duplicateNum, missingNum};
+//     }
+// };
+
+
+
+
+//approach - 2
+//time complexity - O(n)
+//space complexity - O(1)
+class Solution {
+public:
+    vector<int> findErrorNums(vector<int>& nums) {
+        int n = nums.size();
+
+        int duplicateNum = 0;
+        int missingNum = 0;
+        for(int i = 0; i < n; i++) {
+            if(nums[abs(nums[i]) - 1] < 0) { // Check if the number at the target index is already negative
+                duplicateNum = abs(nums[i]); //Use abs() to ensure positive result
+            }
+            else { //Use else so we only negate if not already visited
+                nums[abs(nums[i]) - 1] = -abs(nums[abs(nums[i]) - 1]);
+            }
+        }
+
+        for(int i = 0; i < n; i++) {
+            if(!(nums[i] < 0)) {
+                missingNum = i + 1;
+            }
+        }
+
+        return {duplicateNum, missingNum};
+    }
+};
