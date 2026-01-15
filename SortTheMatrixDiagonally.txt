@@ -1,0 +1,34 @@
+//approach - 1
+//time complexity - O(m * n * log(min(m, n)))
+//space complexity - O(m * n)
+class Solution {
+public:
+    vector<vector<int>> diagonalSort(vector<vector<int>>& mat) {
+        int m = mat.size();
+        int n = mat[0].size();
+
+        map<int, vector<int>> mp;
+        vector<vector<int>> result;
+        //step1 - fill map with [i - j] value
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                mp[i - j].push_back(mat[i][j]);
+            }
+        }
+
+        //step2 - sort the mat elements
+        for(auto &it: mp) {
+            sort(it.second.begin(), it.second.end());
+        }
+
+        //step3 - replace elements with the map element from back side
+        for(int i = m - 1; i >= 0; i--) {
+            for(int j = n - 1; j >= 0; j--) {
+                mat[i][j] = mp[i - j].back();
+                mp[i - j].pop_back();
+            }
+        }
+
+        return mat;
+    }
+};
