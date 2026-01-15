@@ -1,0 +1,21 @@
+//approach - 1
+//time complexity - O(nlogn)
+//space complexity - O(1), if we ignore stack sorting space
+class Solution {
+public:
+    int largestPerimeter(vector<int>& nums) {
+        int n = nums.size();
+
+        //step1 - sort the nums vector
+        sort(nums.begin(), nums.end());
+
+        //step2 - if nums[i] + nums[i + 1] > nums[i + 2], then triangle is possible, so return true
+        for(int i = n - 3; i >= 0; i--) {
+            if(nums[i] + nums[i + 1] > nums[i + 2]) { //a + b > c
+                return nums[i] + nums[i + 1] + nums[i + 2];
+            }
+        }
+
+        return false;
+    }
+};
