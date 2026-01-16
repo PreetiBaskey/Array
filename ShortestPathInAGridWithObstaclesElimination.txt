@@ -1,0 +1,57 @@
+//approach - 1
+//time complexity - O(m * n * k)
+//space complexity - O(m * n * k)
+class Solution {
+public:
+    int shortestPath(vector<vector<int>>& grid, int k) {
+        int m = grid.size();
+        int n = grid[0].size();
+
+        queue<vector<int>> q;
+        bool visited[41][41][1601];
+        vector<vector<int>> directions{{0, -1}, {1, 0}, {0, 1}, {-1, 0}};
+
+        int steps = 0;
+        int i = 0, j = 0;
+        q.push({i, j, k});
+        memset(visited, false, sizeof(visited));
+
+        while(!q.empty()) {
+            int size = q.size();
+
+            while(size--) {
+                vector<int> frontCell = q.front();
+                q.pop();
+
+                int front_i = frontCell[0];
+                int front_j = frontCell[1];
+                int front_obs = frontCell[2];
+
+                if(front_i == m - 1 && front_j == n - 1) {
+                    return steps;
+                }
+
+                for(vector<int> &dir: directions) {
+                    int new_i = front_i + dir[0];
+                    int new_j = front_j + dir[1];
+
+                    if(new_i < 0 || new_i >= m || new_j < 0 || new_j >= n) {
+                        continue;
+                    }
+
+                    if(grid[new_i][new_j] == 0 && !visited[new_i][new_j][front_obs]) {
+                        q.push({new_i, new_j, front_obs});
+                        visited[new_i][new_j][front_obs] = true;
+                    }
+                    else if(grid[new_i][new_j] == 1 && front_obs > 0 && !visited[new_i][new_j][front_obs - 1]) {
+                        q.push({new_i, new_j, front_obs - 1});
+                        visited[new_i][new_j][front_obs - 1] = true;
+                    }
+                }
+            }
+            steps++;
+        }
+
+        return -1;
+    }
+};
