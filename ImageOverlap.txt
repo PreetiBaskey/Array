@@ -1,0 +1,97 @@
+//approach - 1
+//time complexity - O(n^4)
+//space complexity - O(1)
+// class Solution {
+// public:
+//     /**
+//      * Calculates the number of overlapping 1s for a specific (rowOffset, colOffset).
+//      * img2 is conceptually shifted, and we check its new coordinates against img1.
+//      */
+//     int getMaxOverlap(vector<vector<int>> &img1, vector<vector<int>> &img2, int rowOffset, int colOffset) {
+//         int n = img1.size();
+//         int count = 0;
+
+//         for(int i = 0; i < n; i++) {
+//             for(int j = 0; j < n; j++) {
+//                 // Calculate the corresponding coordinates in img2 based on the shift
+//                 int img2_i = i - rowOffset;
+//                 int img2_j = j - colOffset;
+
+//                 // Ensure the shifted coordinates still fall within the matrix boundaries
+//                 if(img2_i < 0 || img2_i >= n || img2_j < 0 || img2_j >= n) {
+//                     continue;
+//                 }
+//                 else {
+//                     // Increment count if both images have a 1 at the overlapping position
+//                     if(img1[i][j] == 1 && img2[img2_i][img2_j] == 1) {
+//                         count++;
+//                     }
+//                 }
+//             }
+//         }
+//         return count;
+//     }
+
+//     int largestOverlap(vector<vector<int>>& img1, vector<vector<int>>& img2) {
+//         int n = img1.size();
+//         int maxOverlap = 0;
+
+//         /**
+//          * Iterate through all possible shifts in a 2D plane.
+//          * Offsets range from -(n-1) to (n-1) to cover all overlapping possibilities.
+//          */
+//         for(int rowOffset = -n + 1; rowOffset < n; rowOffset++) {
+//             for(int colOffset = -n + 1; colOffset < n; colOffset++) {
+//                 // Compute overlap count for the current shift and track the maximum
+//                 int count = getMaxOverlap(img1, img2, rowOffset, colOffset);
+//                 maxOverlap = max(maxOverlap, count);
+//             }
+//         }
+
+//         return maxOverlap;
+//     }
+// };
+
+
+
+
+//approach - 2
+//time complexity - O(n^2 + l1 * l2 * log(unique shifts))
+//space complexity - O(l1 + l2 + s)
+class Solution {
+public:
+    int largestOverlap(vector<vector<int>>& img1, vector<vector<int>>& img2) {
+        int n = img1.size();
+
+        // Step 1: Store the coordinates of all pixels containing 1
+        // This avoids processing empty (0) pixels, significantly improving speed.
+        vector<pair<int, int>> ones1, ones2;
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < n; j++) {
+                if(img1[i][j] == 1) ones1.push_back({i, j});
+                if(img2[i][j] == 1) ones2.push_back({i, j});
+            }
+        }
+
+        int maxOverlap = 0;
+        // Step 2: Use a map to track the frequency of specific "transformation vectors"
+        // Key: {row_diff, col_diff}, Value: number of pairs sharing this shift
+        map<pair<int, int>, int> mp;
+        
+        for(auto &p1 : ones1) {
+            for(auto &p2 : ones2) {
+                // Calculate the exact shift needed to align a '1' from img1 to a '1' from img2
+                int rowDiff = p2.first - p1.first;
+                int colDiff = p2.second - p1.second;
+                
+                // If multiple pairs of 1s share the same shift, they will all overlap 
+                // under that specific translation.
+                mp[{rowDiff, colDiff}]++;
+                maxOverlap = max(maxOverlap, mp[{rowDiff, colDiff}]);
+            }
+        }
+
+        return maxOverlap;
+    }
+};
+
