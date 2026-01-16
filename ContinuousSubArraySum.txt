@@ -1,0 +1,39 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(min(n, k))
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        int n = nums.size();
+
+        // Maps remainder of (prefix sum % k) to its earliest seen index
+        unordered_map<int, int> mp;
+        int sum = 0;
+
+        // Base case: a sum of 0 at index -1 allows detection of valid 
+        // subarrays starting from index 0
+        mp[0] = -1; 
+
+        for(int i = 0; i < n; i++) {
+            sum += nums[i];
+
+            // Calculate remainder; if sum1 % k == sum2 % k, 
+            // then the sum of elements between them is a multiple of k
+            int remainder = sum % k;
+
+            if(mp.find(remainder) != mp.end()) {
+
+                // Check if the subarray length is at least 2
+                if(i - mp[remainder] >= 2) {
+                    return true;
+                }
+            }
+            else {
+                    // Only store the first occurrence to maximize subarray length
+                    mp[remainder] = i;
+            }
+        }
+
+        return false;
+    }
+};
