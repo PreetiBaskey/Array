@@ -1,0 +1,37 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(1)
+class Solution {
+public:
+    int minimumAverageDifference(vector<int>& nums) {
+        int n = nums.size();
+        long long minAvgDiff =  LLONG_MAX;
+        
+        long long totalSum = 0;
+        for(int &num: nums) {
+            totalSum += num;
+        }
+
+        long long leftSum = 0;
+        long long rightSum = 0;
+        int leftN = 0;
+        int rightN = 0;
+        long long currDiff = LLONG_MAX;
+        for(int i = 0; i < n; i++) {
+            leftSum += nums[i];
+            rightSum = totalSum - leftSum;
+            leftN = i + 1;
+            rightN = n - leftN;
+
+            long long leftAvg = leftSum/leftN;
+            long long rightAvg = rightN == 0 ? 0 : rightSum/rightN;
+            
+            if(currDiff > abs((leftAvg) - (rightAvg))) {
+                currDiff = abs((leftAvg) - (rightAvg));
+                minAvgDiff = i;
+            }
+        }
+
+        return minAvgDiff;      
+    }
+};
