@@ -1,0 +1,47 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(n)
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        int n = intervals.size();
+        vector<vector<int>> result;
+
+        int i = 0;
+        while(i < n) {
+            int currStartPoint = intervals[i][0];
+            int currEndPoint = intervals[i][1];
+
+            int newStartPoint = newInterval[0];
+            int newEndPoint = newInterval[1];
+
+            // current interval completely before newInterval
+            if(currEndPoint < newStartPoint) {
+                result.push_back(intervals[i]);
+            }
+
+            // current interval completely after newInterval
+            else if(currStartPoint > newEndPoint){
+                break;
+            }
+
+            // overlapping interval
+            else {
+                newInterval[0] = min(newStartPoint, currStartPoint);
+                newInterval[1] = max(newEndPoint, currEndPoint);
+            }
+            i++;
+        }
+
+        // insert merged interval
+        result.push_back(newInterval);
+
+        // add remaining intervals
+        while(i < n) {
+            result.push_back(intervals[i]);
+            i++;
+        }
+
+        return result;
+    }
+};
