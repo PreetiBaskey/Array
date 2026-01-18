@@ -1,0 +1,81 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(n)
+class Solution {
+public:
+    int minJumps(vector<int>& arr) {
+        int n = arr.size();
+
+        // Map each value -> list of all indices having that value
+        // This allows jumping to any index with the same value in O(1) lookup
+        unordered_map<int, vector<int>> mp;
+
+        // visited[i] = true means index i has already been visited in BFS
+        vector<bool> visited(n, false);
+
+        // Build the map
+        for(int i = 0; i < n; i++) {
+            mp[arr[i]].push_back(i);
+        }
+
+        // BFS queue stores the current index position
+        queue<int> q;
+        q.push(0);                 // start from index 0
+        visited[0] = true;         // mark start as visited
+
+        int steps = 0;             // number of jumps taken so far
+
+        // Standard BFS traversal
+        while(!q.empty()) {
+            int len = q.size();    // number of nodes at current BFS level
+
+            // Process one BFS level
+            while(len--) {
+                int curr = q.front();
+                q.pop();
+
+                // If we reached last index, return number of jumps
+                if(curr == n - 1) {
+                    return steps;
+                }
+
+                // Possible moves: left and right neighbors
+                int currLeft = curr - 1;
+                int currRight = curr + 1;
+
+                // Move to left index if valid and not visited
+                if(currLeft >= 0 && !visited[currLeft]) {
+                    q.push(currLeft);
+                    visited[currLeft] = true;
+                }
+
+                // Move to right index if valid and not visited
+                if(currRight < n && !visited[currRight]) {
+                    q.push(currRight);
+                    visited[currRight] = true;
+                }
+
+                // Jump to all indices having the same value as arr[curr]
+                // This is the key optimization for this problem
+                for(int &idx : mp[arr[curr]]) {
+                    if(!visited[idx]) {
+                        q.push(idx);
+                        visited[idx] = true;
+                    }
+                }
+
+                // Important optimization:
+                // Once we process all jumps for this value,
+                // erase it so we never process it again.
+                // This prevents O(n^2) time complexity.
+                mp.erase(arr[curr]);
+            }
+
+            // After processing one BFS layer, increment jump count
+            steps++;
+        }
+
+        // If last index is never reached
+        return -1;
+    }
+};
