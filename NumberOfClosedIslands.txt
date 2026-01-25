@@ -1,0 +1,59 @@
+//approach - 1
+//time complexity - O(m * n)
+//space complexity - O(m * n) - due to recursion stack, auxiliary space is O(1)
+class Solution {
+public:
+    // Helper function to explore the island using Depth First Search
+    bool dfs(vector<vector<int>> &grid, int row, int col) {
+        int m = grid.size();
+        int n = grid[0].size();
+
+        // BASE CASE: If we go out of bounds, it means this island 
+        // touches the edge and is NOT closed.
+        if(row < 0 || row >= m || col < 0 || col >= n) {
+            return false;
+        }
+
+        // BASE CASE: If we hit water (1), we've found a valid boundary 
+        // for this direction.
+        if(grid[row][col] == 1) {
+            return true;
+        }
+
+        // Mark the current cell as visited by turning it into water (1)
+        // to prevent infinite loops and re-processing.
+        grid[row][col] = 1;
+
+        // Recursively check all four directions.
+        // Note: We store results in variables first to ensure DFS explores 
+        // the ENTIRE island before returning.
+        bool isLeftClosed  = dfs(grid, row, col - 1);
+        bool isRightClosed = dfs(grid, row, col + 1);
+        bool isUpClosed    = dfs(grid, row - 1, col);
+        bool isDownClosed  = dfs(grid, row + 1, col);
+
+        // An island is "closed" only if it is surrounded by water 
+        // in ALL four directions.
+        return isLeftClosed && isRightClosed && isUpClosed && isDownClosed;
+    }
+
+    int closedIsland(vector<vector<int>>& grid) {
+        int m = grid.size();
+        int n = grid[0].size();
+        int noOfClosedIslands = 0;
+
+        // Traverse every cell in the grid
+        for(int i = 0; i < m; i++) {
+            for(int j = 0; j < n; j++) {
+                // If we find land (0), start a DFS to check if it's a closed island
+                if(grid[i][j] == 0) {
+                    if(dfs(grid, i, j)) {
+                        noOfClosedIslands++;
+                    }
+                }
+            }
+        }
+
+        return noOfClosedIslands;
+    }
+};
