@@ -1,0 +1,36 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(1)
+class Solution {
+public:
+    long long zeroFilledSubarray(vector<int>& nums) {
+        int n = nums.size();
+        long long result = 0;     // total count of zero-filled subarrays
+
+        int i = 0;
+        while(i < n) {
+            // If we find a zero, count how many consecutive zeros exist
+            if(nums[i] == 0) {
+                long long count = 0;
+
+                // Count length of continuous zero segment
+                while(i < n && nums[i] == 0) {
+                    count++;
+                    i++;
+                }
+
+                // Number of subarrays in a block of 'count' zeros = count * (count + 1) / 2
+                long long currSubCount = (count * (count + 1)) / 2;
+
+                // Add to final result
+                result += currSubCount;
+            }
+            else {
+                // Skip non-zero elements
+                i++;
+            }
+        }
+
+        return result;
+    }
+};
