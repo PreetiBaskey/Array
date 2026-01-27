@@ -1,0 +1,28 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(n)
+class Solution {
+public:
+    vector<vector<int>> groupThePeople(vector<int>& groupSizes) {
+        int n = groupSizes.size();
+        vector<vector<int>> result;
+        
+        // Key: group size | Value: list of person indices for the current group
+        unordered_map<int, vector<int>> mp;
+
+        for(int i = 0; i < n; i++) {
+            int size = groupSizes[i];
+            
+            // Add current person to the bucket corresponding to their group size
+            mp[size].push_back(i);
+
+            // Once the bucket is full, move it to results and reset it
+            if(mp[size].size() == size) {
+                result.push_back(mp[size]);
+                mp[size].clear(); // Prepare for the next group of the same size
+            }
+        }
+    
+        return result;
+    }
+};
