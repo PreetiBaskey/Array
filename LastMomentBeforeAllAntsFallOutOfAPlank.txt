@@ -1,0 +1,25 @@
+//approach - 1
+//time complexity - O(l + r), l, r - no of ants moving left and right respectively
+//space complexity - O(1)
+class Solution {
+public:
+    int getLastMoment(int n, vector<int>& left, vector<int>& right) {
+        int result = 0;
+
+        // When two ants meet, they turn around. 
+        // This is mathematically identical to them passing through each other.
+        // Therefore, the last moment is simply the maximum distance any ant travels.
+
+        // Ants moving left need to travel 'idx' distance to reach 0
+        for(int &idx: left) {
+            result = max(result, idx);
+        }
+
+        // Ants moving right need to travel 'n - idx' distance to reach n
+        for(int &idx: right) {
+            result = max(result, n - idx);
+        }
+
+        return result;
+    }
+};
