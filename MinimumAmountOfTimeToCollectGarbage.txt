@@ -1,0 +1,42 @@
+//approach - 1 - beautiful question
+//time complexity - O(n)
+//space complexity - O(1)
+class Solution {
+public:
+    int garbageCollection(vector<string>& garbage, vector<int>& travel) {
+        int n = garbage.size();
+
+        int pickCount = 0;
+        int travelCount = 0;
+
+        // Tracks the last house index where each type of garbage is found
+        int metalIdx = 0;
+        int plasticIdx = 0;
+        int glassIdx = 0;
+
+        // Step 1: Count total picking time and find the furthest house for each garbage type
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < garbage[i].length(); j++) {
+                if(garbage[i][j] == 'M') metalIdx = i;
+                else if(garbage[i][j] == 'P') plasticIdx = i;
+                else if(garbage[i][j] == 'G') glassIdx = i;
+                
+                pickCount++; // Every character represents 1 unit of picking time
+            }
+        }
+
+        // Step 2: Convert travel distances into a prefix sum for quick range calculation
+        // travel[i] becomes the total time to reach house i + 1 from house 0
+        int m = travel.size();
+        for(int i = 1; i < m; i++) {
+            travel[i] += travel[i - 1];
+        }
+
+        // Step 3: Add travel time for each truck only up to its last required house
+        travelCount += metalIdx > 0 ? travel[metalIdx - 1] : 0;
+        travelCount += plasticIdx > 0 ? travel[plasticIdx - 1] : 0;
+        travelCount += glassIdx > 0 ? travel[glassIdx - 1] : 0;
+
+        return pickCount + travelCount;      
+    }
+};
