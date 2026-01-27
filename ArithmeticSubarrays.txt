@@ -3,32 +3,42 @@
 //space complexity - O(n)
 class Solution {
 public:
+    // Helper function to check if a single subarray forms an Arithmetic Progression
     bool checkAp(vector<int> &arr) {
         int n = arr.size();
+        if (n < 2) return true; // Base case: 0 or 1 elements are technically an AP
 
+        // 1. Sort to bring elements into sequential order
         sort(begin(arr), end(arr));
+
+        // 2. Calculate the difference between the first two elements
         int commonDiff = arr[1] - arr[0];
+
+        // 3. Verify if every subsequent pair maintains the same difference
         for(int i = 2; i < n; i++) {
             if(arr[i] - arr[i - 1] != commonDiff) {
-                return false;
+                return false; // Not an AP
             }
         }        
 
-        return true;
+        return true; // All gaps were equal
     }
+
     vector<bool> checkArithmeticSubarrays(vector<int>& nums, vector<int>& l, vector<int>& r) {
-        int m = l.size();
+        int m = l.size(); // Number of queries
         vector<bool> result;
 
+        // Process each query defined by ranges l[i] and r[i]
         for(int i = 0; i < m; i++) {
             int start = l[i];
             int end = r[i];
 
+            // 1. Extract the subarray from 'nums' using range iterators
+            // Note: end + 1 is used because the range is inclusive [start, end]
             vector<int> tempArr(begin(nums) + start, begin(nums) + end + 1);
 
-            bool isAp = checkAp(tempArr);
-
-            result.push_back(isAp);
+            // 2. Check the extracted subarray and store the result
+            result.push_back(checkAp(tempArr));
         }
 
         return result;
