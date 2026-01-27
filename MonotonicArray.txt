@@ -1,0 +1,30 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(1)
+class Solution {
+public:
+    bool isMonotonic(vector<int>& nums) {
+        int n = nums.size();
+        
+        // Flags to track if we encounter any increasing or decreasing steps
+        bool increasing = false;
+        bool decreasing = false;
+
+        for(int i = 0; i < n - 1; i++) {
+            // If current element is smaller than next, the array has an increasing step
+            if(nums[i] < nums[i + 1]) {
+                increasing = true;
+            }
+            // If current element is larger than next, the array has a decreasing step
+            else if(nums[i] > nums[i + 1]) {
+                decreasing = true;
+            }
+            
+            // Optimization: If both flags become true, it's already non-monotonic
+            if(increasing && decreasing) return false;
+        }
+
+        // If it never did both (increased AND decreased), it is monotonic
+        return true;
+    }
+};
