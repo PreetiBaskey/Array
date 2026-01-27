@@ -1,0 +1,67 @@
+//approach - 1
+//time complexity - O(n^2)
+//space complexity - O(1)
+class Solution {
+public:
+    vector<vector<int>> generateMatrix(int n) {
+        vector<vector<int>> result;
+
+        int dir = 0;
+        int left = 0;
+        int right = n - 1;
+        int top = 0;
+        int down = n - 1;
+        vector<vector<int>> matrix(n, vector<int>(n));
+
+        int num = 1;
+        while(top <= down && left <= right) {
+            if(dir == 0) {
+                //left to right
+                //constant - top (row)
+                for(int i = left; i <= right; i++) {
+                    // result.push_back(matrix[top][i]);
+                    matrix[top][i] = num;
+                    num++;
+                }
+                top++;
+            }
+            else if(dir == 1) {
+                //top to bottom
+                //constant - right (col)
+                for(int i = top; i <= down; i++) {
+                    // result.push_back(matrix[i][right]);
+                    matrix[i][right] = num;
+                    num++;
+                }
+                right--;
+            }
+            else if(dir == 2) {
+                //right to left
+                //constant - down (row)
+                for(int i = right; i >= left; i--) {
+                    // result.push_back(matrix[down][i]);
+                    matrix[down][i] = num;
+                    num++;
+                }
+                down--;
+            }
+            else if(dir == 3) {
+                //down to top
+                //constant - left (col)
+                for(int i = down; i >= top; i--) {
+                    // result.push_back(matrix[i][left]);
+                    matrix[i][left] = num;
+                    num++;
+                }
+                left++;
+            }
+            
+            dir++;
+            if(dir > 3) {
+                dir = 0;
+            }
+        }
+
+        return matrix;
+    }
+};
