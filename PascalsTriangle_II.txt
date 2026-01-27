@@ -1,0 +1,62 @@
+//approach - 1
+//time complexity - O(n ^ 2)
+//space complexity - O(n ^ 2)
+// class Solution {
+// public:
+//     vector<int> getRow(int rowIndex) {
+//         // Stores all rows up to the requested rowIndex
+//         vector<vector<int>> result;
+
+//         // Iterate through each row from 0 up to and including rowIndex
+//         for(int i = 0; i <= rowIndex; i++) {
+            
+//             // Initialize the current row with 'i + 1' elements, all set to 1
+//             // This automatically handles the first and last '1' of every row
+//             vector<int> row(i + 1, 1);
+
+//             // Fill in the interior elements (between the first and last index)
+//             // Each element is the sum of the two elements directly above it in the previous row
+//             for(int j = 1; j < i; j++) {
+//                 row[j] = result[i - 1][j] + result[i - 1][j - 1];
+//             }
+
+//             // Store the completed row into our result matrix
+//             result.push_back(row);
+//         }
+
+//         // Return only the last row generated
+//         return result.back();
+//     }
+// };
+
+
+
+
+//approach - 2
+//time complexity - O(n ^ 2)
+//space complexity - O(n)
+class Solution {
+public:
+    vector<int> getRow(int rowIndex) {
+        // 'prev' stores the row calculated in the previous iteration
+        vector<int> prev;
+
+        // Iterate through each row level from 0 up to rowIndex
+        for(int i = 0; i < rowIndex + 1; i++) {
+            
+            // Create the current row of size (i + 1) and initialize all with 1s
+            vector<int> curr(i + 1, 1);
+
+            // Fill middle elements by adding adjacent values from the previous row
+            // Loop runs only if i > 1 (starting from the 3rd row level)
+            for(int j = 1; j < i; j++) {
+                curr[j] = prev[j] + prev[j - 1];
+            }
+            
+            // Update 'prev' to be the current row to prepare for the next iteration
+            prev = curr;
+        }
+
+        return prev;
+    }
+};
