@@ -1,0 +1,28 @@
+//approach - 1
+//time complexity - O(nlogn)
+//space complexity - O(1) (auxiliary) or O(log N) (sorting overhead)
+class Solution {
+public:
+    int reductionOperations(vector<int>& nums) {
+        int n = nums.size();
+        int oprCount = 0;
+
+        // Sort to group identical numbers and easily identify the "next largest" elements
+        sort(nums.begin(), nums.end());
+
+        // Traverse backwards to reduce the largest elements down to the smallest
+        for(int i = n - 1; i > 0; i--) {
+            // If the current element is the same as the next one, no reduction is needed yet
+            if(nums[i] == nums[i - 1]) {
+                continue;
+            }
+            // When we find a strictly smaller element (nums[i-1]), all elements 
+            // from index 'i' to 'n-1' must be reduced by one "step".
+            else {
+                oprCount += n - i;
+            }
+        }
+
+        return oprCount;
+    }
+};
