@@ -1,0 +1,86 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(n)
+// class Solution {
+// public:
+//     vector<int> sortArrayByParity(vector<int>& nums) {
+//         int n = nums.size();
+//         unordered_map<int, vector<int>> mp;
+//         vector<int> result;
+
+//         for(int &num: nums) {
+//             if(num % 2 == 0) {
+//                 mp[0].push_back(num);
+//             }
+//             else {
+//                 mp[1].push_back(num);
+//             }
+//         }
+
+//         for(auto &vec: mp) {
+//             if(vec.first == 0) {
+//                 for(int &num: vec.second) {
+//                     result.push_back(num);
+//                 }
+//             }  
+//         }
+//         mp[0].clear();
+//         for(auto &vec: mp) {
+//             for(int &num: vec.second) {
+//                 result.push_back(num);
+//             }
+//         }
+
+//         return result;
+//     }
+// };
+
+
+
+//approach - 2
+//time complexity - O(n)
+//space complexity - O(n)
+// class Solution {
+// public:
+//     vector<int> sortArrayByParity(vector<int>& nums) {
+//         int n = nums.size();
+//         vector<int> result(n);
+
+//         int i = 0;
+//         int j = n - 1;
+//         for(int &num: nums) {
+//             if(num % 2 == 0) {
+//                 result[i] = num;
+//                 i++;
+//             }
+//             else if(num % 2 != 0) {
+//                 result[j] = num;
+//                 j--;
+//             }
+//         }
+
+//         return result;
+//     }
+// };
+
+
+
+//approach - 3 - optimized opproach
+//time complexity - O(n)
+//space complexity - O(1)
+class Solution {
+public:
+    vector<int> sortArrayByParity(vector<int>& nums) {
+        int n = nums.size();
+        
+        int j = 0;
+        for(int i = 0; i < n; i++) {
+            if(nums[i] % 2 == 0) {
+                swap(nums[i], nums[j]);
+                j++;
+            }
+        }
+
+        return nums;
+    }
+};  
