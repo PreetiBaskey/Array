@@ -1,0 +1,45 @@
+//approach - 1
+//time complexity - O(n)
+//space complexity - O(n)
+class Solution {
+public:
+    vector<int> getAverages(vector<int>& nums, int k) {
+        // Radius 0 means the average of each element is itself
+        if(k == 0) {
+            return nums;
+        }
+
+        int n = nums.size();
+        // Initialize result with -1 to handle indices where a k-radius window isn't possible
+        vector<int> result(n, -1); 
+
+        // A valid window centered at index 'i' needs k elements on both sides (size 2k + 1)
+        if(n < 2 * k + 1) {
+            return result;
+        }
+
+        // Use long long for prefix sums to prevent overflow (max sum can reach ~10^10)
+        vector<long long> prefixSum(n, 0);
+        prefixSum[0] = nums[0];
+        for(int i = 1; i < n; i++) {
+            prefixSum[i] = prefixSum[i - 1] + (long long)nums[i];
+        }
+
+        // Only indices from k to n-k-1 can be centers of a full 2k + 1 window
+        for(int i = k; i <= n - k - 1; i++) {
+            int leftIndex = i - k;
+            int rightIndex = i + k;
+
+            // Get sum of range [leftIndex, rightIndex] using prefix sums
+            long long sum = prefixSum[rightIndex];
+            if(leftIndex > 0) {
+                sum -= prefixSum[leftIndex - 1];
+            } 
+
+            // Calculate integer average for the window
+            result[i] = sum / (2 * k + 1);
+        }
+
+        return result;
+    }
+};
