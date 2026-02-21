@@ -1,0 +1,112 @@
+// class Solution {
+// public:
+//     bool check(vector<int>& nums) {
+//        int n = nums.size();
+//        int count = 0;
+
+//         for(int i = 0; i < n; i++) {
+//             if(nums[i] > nums[(i + 1) % n]) {
+//                 count++;
+//             }
+//         } 
+
+//         return count <= 1;
+//     }
+// };
+
+
+
+
+//approach - 1
+//time complexity - O(n ^ 2)
+//space complexity - O(n)
+// class Solution {
+// public:
+//     bool check(vector<int>& nums) {
+//        int n = nums.size();
+
+//        vector<int> sorted(n);
+//        for(int r = 0; r <= n; r++) {
+//             int idx = 0;
+
+//             for(int i = r; i < n; i++) {
+//                 sorted[idx] = nums[i];
+//                 idx++;
+//             }
+//             for(int i = 0; i < r; i++) {
+//                 sorted[idx] = nums[i];
+//                 idx++;
+//             }
+
+//             bool isSorted = true;
+//             for(int i = 0; i < n - 1; i++) {
+//                 if(sorted[i] > sorted[i + 1]) {
+//                     isSorted = false;
+//                     break;
+//                 }
+//             }
+
+//             if(isSorted) {
+//                 return true;
+//             }
+//        }
+
+//        return false;
+//     }
+// };
+
+
+
+
+//approach - 2
+//time complexity - O(n ^ 2 + nlogn)
+//space complexity - O(n)
+// class Solution {
+// public:
+//     bool check(vector<int>& nums) {
+//         int n = nums.size();
+
+//         vector<int> sorted = nums;
+//         sort(begin(sorted), end(sorted));
+//         for(int r = 0; r <= n; r++) {
+//             int isSorted = true;
+//             for(int i = 0; i < n; i++) {
+//                 if(nums[i] != sorted[(i + r) % n]) {
+//                     isSorted = false;
+//                     break;
+//                 }
+//             }
+
+//             if(isSorted == true) {
+//                 return true;
+//             } 
+//         }
+
+//         return false;
+//     }
+// };
+
+
+
+
+//approach - 3
+//time complexity - O(n)
+//space complexity - O(1)
+class Solution {
+public:
+    bool check(vector<int>& nums) {
+        int n = nums.size();
+
+        //there should be only one peak, if it a rotated sorted array
+        //if more than 1 peak, then it was not a sorted array,
+        //that is rotated
+        int peak = 0; 
+        for(int i = 0; i < n; i++) {
+            if(nums[i] > nums[(i + 1) % n]) {
+                peak++;
+            }
+        }
+
+        return peak <= 1;
+    }
+};
